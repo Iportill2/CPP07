@@ -1,0 +1,6 @@
+.DS_Store
+*.out
+*.o
+*.a
+.vscode
+Start_with_a_few_functions
