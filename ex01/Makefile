@@ -3,8 +3,7 @@
 #   INGREDIENTS                                                                #
 #------------------------------------------------------------------------------#
 
-NAME			:=	 Start_with_a_few_functions
-
+NAME			:=	  Iter
 CPP				:=	c++
 CPPFLAGS		:=	-Wall -Wextra -Werror -std=c++98 #-g3 -fsanitize=address
 
@@ -14,6 +13,7 @@ INCLUDE			:=	$(INCLUDE_PATH)whatever.hpp
 
 
 SRC_PATH		:=	src/
+
 SRC				:=	main.cpp
 
 SRC				:=	$(SRC:%=$(SRC_PATH)%)
