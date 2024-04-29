@@ -1,80 +1,38 @@
+NAME = _Array
 
-#------------------------------------------------------------------------------#
-#   INGREDIENTS                                                                #
-#------------------------------------------------------------------------------#
+FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g3 #-fsanitize=address
 
-NAME			:=	 Array
+CC = c++
 
-CPP				:=	c++
-CPPFLAGS		:=	-Wall -Wextra -Werror -std=c++98 #-g3 -fsanitize=address
+SRC_FILES = main.cpp
+			
+OBJS = $(SRC_FILES:.cpp=.o)
 
-INCLUDE_PATH	:=	inc/
-INCLUDE			:=	$(INCLUDE_PATH)whatever.hpp
+%.o: %.cpp
+	@$(CC) $(FLAGS) -c $^ -o $@
+
+CLR_RMV		:= \033[0m
+RED		    := \033[1;31m
+GREEN		:= \033[1;32m
+YELLOW		:= \033[1;33m
+BLUE		:= \033[1;34m
+CYAN 		:= \033[1;36m
 
 
 
-SRC_PATH		:=	src/
 
-SRC				:=	main.cpp
+all: $(NAME)
 
-SRC				:=	$(SRC:%=$(SRC_PATH)%)
+$(NAME): $(OBJS) #$(INCLUDE)
+	@$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 
-OBJ_PATH		:=	obj/
-OBJ				:=	$(SRC:$(SRC_PATH)%.cpp=$(OBJ_PATH)%.o)
 
-#------------------------------------------------------------------------------#
-#   UTENSILS                                                                   #
-#------------------------------------------------------------------------------#
+clean:
+	@rm -f $(OBJS)
 
-RM				:=	rm
-RMFLAG			:=	-fr
+fclean: clean
+	@rm -f $(NAME)
 
-DIR_DUP			=	mkdir -p $(@D)
+re: fclean all
 
-#------------------------------------------------------------------------------#
-#   RECIPES                                                                    #
-#------------------------------------------------------------------------------#
-
-all				:	$(NAME)
-
-$(NAME)			:	$(OBJ) 
-					$(CPP) $(CPPFLAGS) $(OBJ) -o $(NAME)
-					@echo -e "$(MAGENTA)Files $(NAME)$(GREEN) compiled!$(RESET)"
-					@echo -e  "$$ART"
-
-$(OBJ_PATH)%.o	:	$(SRC_PATH)%.cpp
-					$(DIR_DUP)
-					$(CPP) $(CPPFLAGS) -I $(INCLUDE_PATH) -c $< -o $@
-
-clean			:
-					$(RM) $(RMFLAG) $(OBJ_PATH)
-					@echo -e "$(MAGENTA)Removing files... $(GREEN)done!$(RESET)"
-
-fclean			:	clean
-					$(RM) $(RMFLAG) $(NAME)
-					@echo -e "$(MAGENTA)Removing $(NAME) $(GREEN)done!$(RESET)"
-
-re				:	fclean all
-
-#------------------------------------------------------------------------------#
-#   SPEC                                                                       #
-#------------------------------------------------------------------------------#
-
-.PHONY			:	all clean fclean re 
-
-#------------------------------------------------------------------------------#
-#   COLORS                                                                     #
-#------------------------------------------------------------------------------#
-
-RESET			:=	\033[0m
-RED_			:=	\033[31m
-RED				:=	\033[91m
-GREEN			:=	\033[92m
-YELLOW			:=	\033[93m
-BLUE			:=	\033[94m
-MAGENTA			:=	\033[95m
-CYAN			:=	\033[96m
-WHITE			:=	\033[97m
-
-#********************************************************************* END ****#
-
+.PHONY: all clean fclean re
