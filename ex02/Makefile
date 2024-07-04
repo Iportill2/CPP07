@@ -1,6 +1,6 @@
 NAME = _Array
 
-FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g3 #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -std=c++98 #-pedantic -g3 #-fsanitize=address
 
 CC = c++
 

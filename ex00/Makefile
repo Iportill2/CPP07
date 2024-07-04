@@ -1,79 +1,35 @@
-
-#------------------------------------------------------------------------------#
-#   INGREDIENTS                                                                #
-#------------------------------------------------------------------------------#
-
-NAME			:=	 Start_with_a_few_functions
-
-CPP				:=	c++
-CPPFLAGS		:=	-Wall -Wextra -Werror -std=c++98 #-g3 -fsanitize=address
-
-INCLUDE_PATH	:=	inc/
-INCLUDE			:=	$(INCLUDE_PATH)whatever.hpp
+NAME = Start_with_a_few_functions
 
 
+SRCS = 	main.cpp 
+		
 
-SRC_PATH		:=	src/
-SRC				:=	main.cpp
 
-SRC				:=	$(SRC:%=$(SRC_PATH)%)
+CC = c++
+RM = rm -f
+CFLAGS = -Wall -Wextra -Werror -std=c++98 
+OBJS = ${SRCS:.cpp=.o}
+DEPS = ${SRCS:.cpp=.d}
 
-OBJ_PATH		:=	obj/
-OBJ				:=	$(SRC:$(SRC_PATH)%.cpp=$(OBJ_PATH)%.o)
+%.o: %.cpp
+	@echo "${BLUE} ◎ $(BROWN)Compiling   ${MAGENTA}→   $(CYAN)$< $(DEF_COLOR)"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-#------------------------------------------------------------------------------#
-#   UTENSILS                                                                   #
-#------------------------------------------------------------------------------#
+${NAME}: ${OBJS}
+		@${CC} ${CFLAGS} ${SRCS} -o ${NAME}
+		@echo "\n$(GREEN) Created $(NAME) ✓ $(DEF_COLOR)\n"
 
-RM				:=	rm
-RMFLAG			:=	-fr
+all:	${NAME}
 
-DIR_DUP			=	mkdir -p $(@D)
+-include ${DEPS}
 
-#------------------------------------------------------------------------------#
-#   RECIPES                                                                    #
-#------------------------------------------------------------------------------#
+clean:
+		@${RM} ${OBJS} ${DEPS}
+		@echo "\n${BLUE} ◎ $(RED)All objects cleaned successfully ${BLUE}◎$(DEF_COLOR)\n"
+fclean:
+		@${RM} ${OBJS} ${DEPS} ${NAME}
+		@echo "\n${BLUE} ◎ $(RED)All objects and executable cleaned successfully${BLUE} ◎$(DEF_COLOR)\n"
 
-all				:	$(NAME)
+re: fclean all
 
-$(NAME)			:	$(OBJ) 
-					$(CPP) $(CPPFLAGS) $(OBJ) -o $(NAME)
-					@echo -e "$(MAGENTA)Files $(NAME)$(GREEN) compiled!$(RESET)"
-					@echo -e  "$$ART"
-
-$(OBJ_PATH)%.o	:	$(SRC_PATH)%.cpp
-					$(DIR_DUP)
-					$(CPP) $(CPPFLAGS) -I $(INCLUDE_PATH) -c $< -o $@
-
-clean			:
-					$(RM) $(RMFLAG) $(OBJ_PATH)
-					@echo -e "$(MAGENTA)Removing files... $(GREEN)done!$(RESET)"
-
-fclean			:	clean
-					$(RM) $(RMFLAG) $(NAME)
-					@echo -e "$(MAGENTA)Removing $(NAME) $(GREEN)done!$(RESET)"
-
-re				:	fclean all
-
-#------------------------------------------------------------------------------#
-#   SPEC                                                                       #
-#------------------------------------------------------------------------------#
-
-.PHONY			:	all clean fclean re 
-
-#------------------------------------------------------------------------------#
-#   COLORS                                                                     #
-#------------------------------------------------------------------------------#
-
-RESET			:=	\033[0m
-RED_			:=	\033[31m
-RED				:=	\033[91m
-GREEN			:=	\033[92m
-YELLOW			:=	\033[93m
-BLUE			:=	\033[94m
-MAGENTA			:=	\033[95m
-CYAN			:=	\033[96m
-WHITE			:=	\033[97m
-
-#********************************************************************* END ****#
-
+.PHONY: all clean fclean re
