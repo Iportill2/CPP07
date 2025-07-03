@@ -3,6 +3,7 @@
 # define ARRAY_HPP
 
 # include <iostream>
+# include <stdexcept>
 
 template <typename T>
 class Array
@@ -40,7 +41,7 @@ Array<T>::Array(unsigned int n) :
 }
 
 template <typename T>
-Array<T>::Array(Array<T> const & src)
+Array<T>::Array(Array<T> const & src) : _array(NULL), _size(0)
 {
 	*this = src;
 }
@@ -56,6 +57,7 @@ Array<T> & Array<T>::operator=(Array<T> const & rhs)
 {
 	if (this != &rhs)
 	{
+		delete [] this->_array;
 		this->_size = rhs.getSize();
 		this->_array = new T[this->_size];
 		for (unsigned int i = 0; i < this->_size; i++)

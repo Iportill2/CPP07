@@ -1,9 +1,60 @@
-.DS_Store
-*.out
+# Compiled Object files
 *.o
-*.a
-.vscode
+*.obj
 
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
 Start_with_a_few_functions
 Iter
 _Array
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+
+# Log files
+*.log
+
+# Memory leak checker files
+*.leaks
+vgcore.*
+
+# Core dumps
+core
+core.*
+
+# Backup files
+*.bak
+*.backup
